@@ -49,13 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
     //draw the tetromino
     function draw() {
         current.forEach(index => {
-            squares[currentPosition+index].classList.add('tetromino')
+            squares[currentPosition + index].classList.add('tetromino')
         })
     }
     //undraw the tetromino
     function undraw() {
         current.forEach(index => {
-            squares[currentPosition+index].classList.remove('tetromino')
+            squares[currentPosition + index].classList.remove('tetromino')
         })
     }
     //make the tetromino move down every second
@@ -66,12 +66,24 @@ document.addEventListener('DOMContentLoaded', () => {
         undraw()
         currentPosition += width
         draw()
+        freeze()
+    }
+
+    //freeze function
+    function freeze() {
+        if(current.some(index => squares[currentPosition + index + width].classList.contains('taken'))) {
+            current.forEach(index => squares[currentPosition + index].classList.add('taken'))
+            //start a new tetromino falling
+            random = Math.floor(Math.random()*theTetrominoes.length)
+            current = theTetrominoes[random][currentRotation]
+            currentPosition = 4
+            draw()
+        }
     }
 
 
 
 
-    
 
 
 
