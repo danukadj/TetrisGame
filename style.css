@@ -45,10 +45,6 @@ div {
     letter-spacing: 1.5rem;
 }
 
-/* .t-close {
-    letter-spacing: 1rem;
-} */
-
 .fw-300 {
     font-weight: 300;
 }
@@ -103,13 +99,13 @@ div {
     color: rgb(133, 121, 107, 0.5);
 }
 
-.previous-shape {
+.preview-shape {
     width: 10rem;
     padding-left: 2rem;
     margin-top: -5rem;
 }
 
-.previous-grid {
+.preview-grid {
     display: flex;
     flex-wrap: wrap;
     width: 8rem;
@@ -138,41 +134,24 @@ div {
     0 4px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* .button::before {
-
-} */
-
-/* .button:active {
+.button:active {
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
     top: 5px;
-} */
+}
 
-
-
-
-
-
+.button:hover {
+    background: #f66c7b;
+    background-image: linear-gradient(top, #d25068, #f66c7b);
+}
 
 .block {
-    background-image: url(../TetrisGame/images/blue_block.png);
+    background-image: url(./images/blue_block.png);
 }
+
 .block2 {
-    background-image: url(../TetrisGame/images/purple_block.png);
+    background-image: url(./images/purple_block.png);
 }
+
 .block3 {
-    background-image: url(../TetrisGame/images/green_block.png);
-}
-.block4 {
-    background-image: url(../TetrisGame/images/navy_block.png);
-}
-.block5 {
-    background-image: url(../TetrisGame/images/pink_block.png);
-}
-
-.end {
-    background-color: #d8edea;
-}
-
-.end {
-    background-image: url(../TetrisGame/images/blue_block.png);
+    background-image: url(./images/green_block.png);
 }

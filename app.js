@@ -21,11 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let timerId
     let nextRandom = 0
     const colors = [
-        'url(../TetrisGame/images/blue_block.png)',
-        'url(../TetrisGame/images/pink_block.png)',
-        'url(../TetrisGame/images/purple_block.png)',
-        'url(../TetrisGame/images/peach_block.png)',
-        'url(../TetrisGame/images/yellow_block.png)'
+        'url(./images/blue_block.png)',
+        'url(./images/pink_block.png)',
+        'url(./images/purple_block.png)',
+        'url(./images/peach_block.png)',
+        'url(./images/yellow_block.png)'
     ]
 
     function createGrid() {
