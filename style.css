@@ -1,36 +1,35 @@
-.container {
-    display: flex;
+:root {
+    /* default font size in browsers is 16px = 1em
+    10/16 = 0.625 = 1rem */
+    font-size: 0.625em;
 }
 
-.grid {
-    width: 200px;
-    height: 400px;
-    display: flex;
-    flex-wrap: wrap;
-    background-color: yellow;
+* {
+    box-sizing: border-box;
 }
 
-.grid div {
-    height: 20px;
-    width: 20px;
+body {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.6rem;
+    margin: auto;
+    max-width: 60rem;
+    color: #d8edea;
+    background: radial-gradient(
+        circle,
+        rgba(175, 196, 174, 1) 0%,
+        rgba(104, 204, 191, 1) 89%,
+        rgba(94, 191, 178, 1) 100%
+        );
 }
 
-.tetromino {
-    background-color: blue;
+header {
+    text-align: center;
+    margin-top: 3rem;
 }
 
-.mini-grid{
-    margin-left: 40px;
-    width: 80px;
-    height: 80px;
-    display: flex;
-    flex-wrap: wrap;
-    background-color: yellow;
-}
-
-.mini-grid div {
-    height: 20px;
-    width: 20px;
+div {
+    height: 2rem;
+    width: 2rem;
 }
 
 /* some utility classes */
@@ -46,9 +45,9 @@
     letter-spacing: 1.5rem;
 }
 
-.t-close {
+/* .t-close {
     letter-spacing: 1rem;
-}
+} */
 
 .fw-300 {
     font-weight: 300;
@@ -56,4 +55,124 @@
 
 .fw-400 {
     font-weight: 400;
+}
+
+.game-area {
+    display: flex;
+    justify-content: center;
+}
+
+.game {
+    height: 0;
+    width: 300px;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 20rem;
+    height: 40rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) inset, 0 1px 0 #fff;    
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    margin-top: 1rem;
+    width: 17.5rem;
+    height: 25rem;
+    background: #f0f0f0;
+    background-image: linear-gradient(#d0d0d0, #f0f0f0);
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) inset, 0 1px 0 #fff;
+    color: #85796b;
+}
+
+.score,
+.lines-display {
+  padding-top: 1rem;
+  font-size: 1.2rem;
+}
+
+.score-display {
+    font-size: 5rem;
+    color: rgb(133, 121, 107, 0.5);
+}
+
+.previous-shape {
+    width: 10rem;
+    padding-left: 2rem;
+    margin-top: -5rem;
+}
+
+.previous-grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 8rem;
+    height: 8rem;
+}
+
+.button {
+    position: relative;
+    width: 12rem;
+    height: 2.2rem;
+    text-align: center;
+    color: #fff;
+    letter-spacing: 1px;
+    text-decoration: none;
+    line-height: 23px;
+    font-size: 10px;
+    display: block;
+    margin: 30px;
+    text-shadow: -1px -1px 0 #a84155;
+    background: #d25068;
+    border: 1px solid #d25068;
+    background-image: linear-gradient(to bottom, #f66c7b, #d25068);
+    border-radius: 5px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    0 -1px 0 rgba(255, 255, 255, 0.1) inset, 0 4px 0 #ad4257,
+    0 4px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* .button::before {
+
+} */
+
+/* .button:active {
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
+    top: 5px;
+} */
+
+
+
+
+
+
+
+.block {
+    background-image: url(../TetrisGame/images/blue_block.png);
+}
+.block2 {
+    background-image: url(../TetrisGame/images/purple_block.png);
+}
+.block3 {
+    background-image: url(../TetrisGame/images/green_block.png);
+}
+.block4 {
+    background-image: url(../TetrisGame/images/navy_block.png);
+}
+.block5 {
+    background-image: url(../TetrisGame/images/pink_block.png);
+}
+
+.end {
+    background-color: #d8edea;
+}
+
+.end {
+    background-image: url(../TetrisGame/images/blue_block.png);
 }
