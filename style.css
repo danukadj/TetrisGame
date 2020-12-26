@@ -16,9 +16,9 @@ body {
     color: #d8edea;
     background: radial-gradient(
         circle,
-        rgba(175, 196, 174, 1) 0%,
-        rgba(104, 204, 191, 1) 89%,
-        rgba(94, 191, 178, 1) 100%
+        rgb(178, 174, 196) 0%,
+        rgb(122, 104, 204) 89%,
+        rgb(104, 94, 191) 100%
         );
 }
 
@@ -115,7 +115,7 @@ div {
 .button {
     position: relative;
     width: 12rem;
-    height: 2.2rem;
+    height: 2.6rem;
     text-align: center;
     color: #fff;
     letter-spacing: 1px;
@@ -154,4 +154,9 @@ div {
 
 .block3 {
     background-image: url(./images/green_block.png);
+}
+
+.footer {
+    text-align: center;
+    margin-left: 1rem;
 }

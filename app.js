@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    alert("use keyboard arrows to play")
 
     const grid_width = 10
     const grid_height = 20
@@ -131,10 +132,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //move down function
     function moveDown() {
+        freeze()
         undraw()
         currentPosition += grid_width
         draw()
-        freeze()
     }
 
     //move left and prevent collisions with shapes moving left
@@ -165,6 +166,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if(current.some(index => squares[currentPosition + index + grid_width].classList.contains('block3') || squares[currentPosition + index + grid_width].classList.contains('block2'))) {
             //make it block2
             current.forEach(index => squares[currentPosition + index].classList.add('block2'))
+
+            addScore()
             //start a new tetromino falling
             random = nextRandom
             nextRandom = Math.floor(Math.random()*theTetrominoes.length)
@@ -172,12 +175,31 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPosition = 4
             draw()
             displayShape()
-            addScore()
             gameOver()
         }
     }
     freeze()
-    
+
+    //check for rotation
+    function isGoRight() {
+        return current.some(index=> (currentPosition + index) % grid_width === grid_width-1)
+    }
+    function isGoLeft() {
+        return current.some(index => (currentPosition + index) % grid_width === 0)
+    }
+    function checkRotatedPosition() {
+        if ((currentPosition+1) % grid_width < 3) {
+            if (isGoRight()) {
+                currentPosition += 1
+            }
+        } else if (currentPosition % grid_width > 6) {
+            if (isGoLeft()) {
+                currentPosition -= 1
+                checkRotatedPosition()
+            }
+        }
+    }
+
     //rotate the tetromino
     function rotate() {
         undraw()
@@ -186,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentRotation = 0
         }
         current = theTetrominoes[random][currentRotation]
+        checkRotatedPosition()
         draw()
     }
 
@@ -208,6 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(current.some(index => squares[currentPosition+index].classList.contains('block2'))) {
             scoreDisplay.innerHTML = 'end'
             clearInterval(timerId)
+            document.removeEventListener("keydown",control)
         }
     }
     
@@ -245,14 +269,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 lines += 1
                 scoreDisplay.innerHTML = score
                 linesDisplay.innerHTML = lines
+                // undraw()
                 row.forEach(index => {
                     squares[index].style.backgroundImage = 'none'
                     squares[index].classList.remove('block2') || squares[index].classList.remove('block')
                 })
-                //
+                //splice array
                 const squaresRemoved = squares.splice(i,grid_width)
                 squares = squaresRemoved.concat(squares)
                 squares.forEach(cell => grid.appendChild(cell))
+                // draw()
             }
         }
     }
