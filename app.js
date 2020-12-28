@@ -1,16 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     alert("use keyboard arrows to play")
-
+    
     const grid_width = 10
     const grid_height = 20
     const grid_size = grid_width * grid_height
-
+    
     const grid = createGrid();
     let squares = Array.from(grid.querySelectorAll('div'))
     const startBtn = document.querySelector('.button')
-
-
-
+    
     const scoreDisplay = document.querySelector('.score-display')
     const linesDisplay = document.querySelector('.lines-score')
     
@@ -21,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let lines = 0
     let timerId
     let nextRandom = 0
+    let game_over = false
     const colors = [
         'url(./images/blue_block.png)',
         'url(./images/pink_block.png)',
@@ -28,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'url(./images/peach_block.png)',
         'url(./images/yellow_block.png)'
     ]
-
+    
     function createGrid() {
         //main grid
         let grid = document.querySelector(".grid")
@@ -50,26 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
             let gridElement = document.createElement("div")
             previewGrid.appendChild(gridElement);
         }
-
+        
         return grid;
     }
 
-    //assign functions to keycodes
-    function control(e) {
-        if(e.keyCode === 37) {
-            moveLeft()
-        } else if (e.keyCode === 38) {
-            rotate()
-        } else if (e.keyCode === 39) {
-            moveRight()
-        } else if (e.keyCode === 40) {
-            moveDown()
-        }
-    }
-
-    // the classical behavior is to speed up the block if down button is kept pressed so doing that
-    document.addEventListener('keydown',control)
-    
     //the tetrominoes
     const lTetromino = [
         [1, grid_width+1, grid_width*2+1, 2],
@@ -77,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         [grid_width*2,1,grid_width+1,grid_width*2+1],
         [grid_width,grid_width*2,grid_width*2+1,grid_width*2+2]
     ]
-
+    
     const zTetromino = [
         [0,grid_width,grid_width+1,grid_width*2+1],
         [grid_width*2,grid_width+1,grid_width*2+1,grid_width+2],
@@ -107,11 +90,29 @@ document.addEventListener('DOMContentLoaded', () => {
     ]
     
     const theTetrominoes = [lTetromino,zTetromino,tTetromino,oTetromino,iTetromino]
-
+    
+    function keyListner() {
+        // the classical behavior is to speed up the block if down button is kept pressed so doing that
+        document.addEventListener('keydown',control)
+    }
+    
+    //assign functions to keycodes
+    function control(e) {
+        if(e.keyCode === 37) {
+            moveLeft()
+        } else if (e.keyCode === 38) {
+            rotate()
+        } else if (e.keyCode === 39) {
+            moveRight()
+        } else if (e.keyCode === 40) {
+            moveDown()
+        }
+    }
+    
     //randomly select a Tetromino
     let random = Math.floor(Math.random()*theTetrominoes.length)
     let current = theTetrominoes[random][currentRotation]
-
+    
     //
     let currentPosition = 4
     //draw the tetromino
@@ -133,9 +134,11 @@ document.addEventListener('DOMContentLoaded', () => {
     //move down function
     function moveDown() {
         freeze()
-        undraw()
-        currentPosition += grid_width
-        draw()
+        if (game_over === false) {
+            undraw()
+            currentPosition += grid_width
+            draw()
+        }
     }
 
     //move left and prevent collisions with shapes moving left
@@ -173,9 +176,11 @@ document.addEventListener('DOMContentLoaded', () => {
             nextRandom = Math.floor(Math.random()*theTetrominoes.length)
             current = theTetrominoes[random][currentRotation]
             currentPosition = 4
-            draw()
-            displayShape()
             gameOver()
+            if(game_over === false) {
+                draw()
+                displayShape()
+            }
         }
     }
     freeze()
@@ -203,35 +208,76 @@ document.addEventListener('DOMContentLoaded', () => {
     //rotate the tetromino
     function rotate() {
         undraw()
+        beforePosition = currentPosition
+        beforeRotation = currentRotation
         currentRotation ++
         if(currentRotation === current.length) {
             currentRotation = 0
         }
         current = theTetrominoes[random][currentRotation]
         checkRotatedPosition()
+        //avoid rotation if space not enough
+        if(current.some(index => squares[currentPosition + index].classList.contains('block2'))) {
+            currentPosition = beforePosition
+            currentRotation = beforeRotation
+        }
+        current = theTetrominoes[random][currentRotation]
         draw()
     }
 
     //start/pause
     startBtn.addEventListener('click', () => {
-        if(timerId) {
-            clearInterval(timerId)
-            timerId = null
+        if (timerId) {
+            if(game_over === false) {
+                document.removeEventListener("keydown",control)
+                clearInterval(timerId)
+                timerId = null
+            } else if (game_over === true) {
+                // location.reload()
+                squares.forEach(square => {
+                    if (!(square.classList.contains('block3'))) {
+                        square.style.backgroundImage = 'none'
+                        square.classList.remove('block2') || square.classList.remove('block')
+                    }
+                })
+                currentIndex = 0
+                currentRotation = 0
+                score = 0
+                lines = 0
+                timerId
+                nextRandom = 0
+                game_over = false
+                scoreDisplay.innerHTML = score
+                linesDisplay.innerHTML = lines
+                startBtn.innerHTML = "Start/Pause"
+                random = Math.floor(Math.random()*theTetrominoes.length)
+                current = theTetrominoes[random][currentRotation]
+                currentPosition = 4
+                draw()
+                keyListner()
+                //make the tetromino move down every second
+                timerId = setInterval(moveDown, 1000)
+                displayShape()
+            }
         } else {
-            draw()
-            //make the tetromino move down every second
-            timerId = setInterval(moveDown, 1000)
-            nextRandom = Math.floor(Math.random()*theTetrominoes.length)
-            displayShape()
+            if (game_over === false) {
+                draw()
+                keyListner()
+                //make the tetromino move down every second
+                timerId = setInterval(moveDown, 1000)
+                displayShape()
+            }
         }
     })
     
     //game over
     function gameOver() {
         if(current.some(index => squares[currentPosition+index].classList.contains('block2'))) {
-            scoreDisplay.innerHTML = 'end'
-            clearInterval(timerId)
             document.removeEventListener("keydown",control)
+            clearInterval(timerId)
+            alert("GAME OVER")
+            startBtn.innerHTML = "New Game"
+            game_over = true
         }
     }
     
