@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let lines = 0
     let timerId
+    let autoMoveTime = 800
     let nextRandom = 0
     let game_over = false
     const colors = [
@@ -260,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 draw()
                 keyListner()
                 //make the tetromino move down every second
-                timerId = setInterval(moveDown, 1000)
+                timerId = setInterval(moveDown, autoMoveTime)
                 displayShape()
             }
         } else {
@@ -268,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 draw()
                 keyListner()
                 //make the tetromino move down every second
-                timerId = setInterval(moveDown, 1000)
+                timerId = setInterval(moveDown, autoMoveTime)
                 displayShape()
             }
         }
