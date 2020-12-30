@@ -32,7 +32,6 @@ div {
     width: 2rem;
 }
 
-/* some utility classes */
 .t-ucase {
     text-transform: uppercase;
 }
@@ -69,7 +68,7 @@ div {
     align-items: center;
     width: 20rem;
     height: 40rem;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) inset, 0 1px 0 #fff;    
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) inset, 0 1px 0 #fff;    
 }
 
 .display {
@@ -78,9 +77,8 @@ div {
     justify-content: space-between;
     align-items: center;
     text-align: center;
-    margin-top: 1rem;
     width: 17.5rem;
-    height: 25rem;
+    height: 26rem;
     background: #f0f0f0;
     background-image: linear-gradient(#d0d0d0, #f0f0f0);
     border-radius: 5px;
@@ -88,9 +86,12 @@ div {
     color: #85796b;
 }
 
+.highscore {
+  font-size: 1.2rem;
+}
+
 .score,
 .lines-display {
-  padding-top: 1rem;
   font-size: 1.2rem;
 }
 
@@ -101,8 +102,9 @@ div {
 
 .preview-shape {
     width: 10rem;
+    height: 10rem;
     padding-left: 2rem;
-    margin-top: -5rem;
+    margin-top: 1rem;
 }
 
 .preview-grid {

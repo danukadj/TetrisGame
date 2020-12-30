@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    alert("use keyboard arrows to play")
+    // alert("use keyboard arrows to play")
     
     const grid_width = 10
     const grid_height = 20
@@ -10,12 +10,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.querySelector('.button')
     
     const scoreDisplay = document.querySelector('.score-display')
+    const highScoreDisplay = document.querySelector('.highscore-display')
     const linesDisplay = document.querySelector('.lines-score')
     
     let currentIndex = 0
     let currentRotation = 0
-    // const width = 10
     let score = 0
+    let localStorageName = "tetris-score"
+    let highScore = 0
+    
+    highScore = localStorage.getItem(localStorageName) == null ? 0 : localStorage.getItem(localStorageName);
+    highScoreDisplay.innerHTML = highScore
+
     let lines = 0
     let timerId
     let nextRandom = 0
@@ -92,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const theTetrominoes = [lTetromino,zTetromino,tTetromino,oTetromino,iTetromino]
     
     function keyListner() {
-        // the classical behavior is to speed up the block if down button is kept pressed so doing that
         document.addEventListener('keydown',control)
     }
     
@@ -113,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let random = Math.floor(Math.random()*theTetrominoes.length)
     let current = theTetrominoes[random][currentRotation]
     
-    //
     let currentPosition = 4
     //draw the tetromino
     function draw() {
@@ -275,6 +279,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if(current.some(index => squares[currentPosition+index].classList.contains('block2'))) {
             document.removeEventListener("keydown",control)
             clearInterval(timerId)
+            highScore = Math.max(score, highScore)
+            localStorage.setItem(localStorageName, highScore)
+            highScoreDisplay.innerHTML = highScore
             alert("GAME OVER")
             startBtn.innerHTML = "New Game"
             game_over = true
@@ -328,5 +335,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
+
+
 
 })
